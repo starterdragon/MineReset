@@ -185,7 +185,9 @@ class MineReset extends PluginBase implements CommandExecutor, Listener{
     }
     public function parseMines(){
         foreach($this->mineData->getAll() as $n => $m){
-            $this->mines[$n] = new Mine($this, new Vector3(min($m[0], $m[1]), min($m[2], $m[3]), min($m[4], $m[5])), new Vector3(max($m[0], $m[1]), max($m[2], $m[3]), max($m[4], $m[5])), $this->getServer()->getLevelByName($m[7]), $m[6] ?? []);
+            if ($this->getServer()->isLevelLoaded($n)){
+              $this->mines[$n] = new Mine($this, new Vector3(min($m[0], $m[1]), min($m[2], $m[3]), min($m[4], $m[5])), new Vector3(max($m[0], $m[1]), max($m[2], $m[3]), max($m[4], $m[5])), $this->getServer()->getLevelByName($m[7]), $m[6] ?? []);
+            }
         }
     }
     public function scheduleReset(MineResetTask $mineResetTask){
